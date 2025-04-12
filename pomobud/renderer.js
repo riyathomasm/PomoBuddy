@@ -7,6 +7,10 @@ window.addEventListener('DOMContentLoaded', () => {
   
 });
 
+renderHeader.innerHTML = `
+  <button id="todo-button">To-Do List</button>
+`;
+
 let isRunning = false;
 let isBreak = false;
 let timeLeft = 30 * 60;
@@ -19,6 +23,8 @@ const status = document.getElementById('status');
 const animationPath = 'animations/cat.json';
 
 console.log('Loading animation from:', animationPath);
+
+
 
 
 
@@ -80,3 +86,7 @@ window.toggleTimer = toggleTimer;
 window.resetTimer = resetTimer;
 display.textContent = formatTime(timeLeft);
 
+const todoButton = document.querySelector('#todo-button');
+    todoButton.addEventListener('click', () => {
+      window.open('todo.html', '_blank');
+    });
