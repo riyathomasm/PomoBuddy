@@ -28,8 +28,30 @@
 
 
   <div class="right-side">
-    <button id="todo-button">To-Do List</button>
-  </div>
+    <button id="todo-button">Set Your Study Goals</button>
+    <button id="Custom">Customize Time</button>
+
+    <div id="custom-time-modal" class="modal">
+      <div class="modal-content">
+        <h3>Customize Timer</h3>
+        <div>Minutes:</div>
+        <input type="number" id="custom-time-input" min="1" max="120" value="30">
+        <div class="modal-buttons">
+          <button id="save-time">Save</button>
+          <button id="cancel-time">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!--the flex image box-->
+
+    <div class="iflex"> 
+      <img src="./animations/img1.png" alt="Image 1">
+      <img src="./animations/img2.png" alt="Image 2">
+      <img src="./animations/img3.png" alt="Image 3">
+    </div>
+
+    <!--end of flex image -->
 
 
 </div>

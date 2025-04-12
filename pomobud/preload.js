@@ -1,4 +1,3 @@
 // preload.js
-window.addEventListener('DOMContentLoaded', () => {
-    // Preload logic if needed
-  });
+const { contextBridge, ipcRenderer } = require('electron');
+
