@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomobuddy</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
+
+
+  </head>
+  <body>
+    <div class = "main">
+    <div class = "left-side">
+    <div id="animation-container" style="width: 300px; height: 300px;"></div>
+
+    <div class="timer-circle">
+      <span id="timer-display">30:00</span>
+    </div>
+    <div class="buttons">
+      <button class="start" onclick="toggleTimer()">Start</button>
+      <button class="reset" onclick="resetTimer()">Reset</button>
+    </div>
+    <p id="status">Stay focused!</p>
+  </div>
+  <div class="right-side"></div>
+</div>
+
+
+    <script type="module" src="./renderer.js"></script>
+
+
+  </body>
+</html>

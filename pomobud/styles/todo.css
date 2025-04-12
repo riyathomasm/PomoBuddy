@@ -1,0 +1,50 @@
+body{
+  background-color: #130c4f;
+}
+
+.todo-container {
+    max-width: 400px;
+    margin: 100px auto 0; /* leaves room for header */
+    background: #6f63dd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  .todo-container h2 {
+    text-align: center;
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  #todo-form {
+    display: flex;
+    gap: 10px;
+  }
+  
+  #todo-input {
+    flex: 1;
+    padding: 8px;
+  }
+  
+  #todo-list {
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  #todo-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: red;
+  }

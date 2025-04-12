@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', sans-serif;
+  background-color: #fad3d0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #333;
+}
+
+.main {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    
+  }
+  
+  .left-side {
+    flex: 1;
+    background-color: #fad3d0; /* optional */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .right-side {
+    flex: 2;
+    background-color: #fff; /* optional */
+    padding: 1rem;
+  }
+  
+
+.timer-circle {
+  width: 200px;
+  height: 200px;
+  background: white;
+  border-radius: 10%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.start {
+  background-color: #2a2d60;
+  color: white;
+}
+
+.reset {
+  background-color: #eee;
+  color: #333;
+}
+
+
+#app-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: #1a1c43;
+    color: white;
+    
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-sizing: border-box;
+    z-index: 1000;
+  }
+  
+  #app-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  
+  #app-header p {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+  
+  #todo-button {
+    background-color: #267852; /* green shade */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-left: auto;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  #todo-button:hover {
+    background-color: #45a049;
+  }
+  
