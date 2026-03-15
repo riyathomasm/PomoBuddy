@@ -2,22 +2,942 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>To-Do List</title>
-  <link rel="stylesheet" href="./styles/todo.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PomoBuddy — Weekly Planner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5e6f0;
+      --bg2: #ede4f3;
+      --card: rgba(255,255,255,0.65);
+      --card-solid: #fff;
+      --text: #4a3f5c;
+      --text-muted: #8a7fa0;
+      --accent-pink: #e8a0bf;
+      --accent-lilac: #c4b1e0;
+      --accent-mint: #a8d8c8;
+      --accent-peach: #f5c5a3;
+      --accent-sky: #a8c8e8;
+      --accent-rose: #e8a0a0;
+      --border: rgba(196,177,224,0.25);
+      --shadow: 0 4px 20px rgba(120,100,150,0.1);
+      --shadow-lg: 0 8px 32px rgba(120,100,150,0.15);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(145deg, var(--bg) 0%, var(--bg2) 50%, #dfe8f5 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    /* Header */
+    .planner-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .planner-header h1 {
+      font-family: 'Comfortaa', cursive;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-lilac));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .planner-header .week-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .week-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .week-nav button {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .week-nav button:hover {
+      background: rgba(232,160,191,0.15);
+      color: var(--text);
+    }
+    .week-nav span {
+      font-family: 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text);
+      min-width: 200px;
+      text-align: center;
+    }
+
+    /* Top row: Habit Tracker + Weekly Priorities */
+    .top-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    /* Card base */
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .card-title {
+      font-family: 'Comfortaa', cursive;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ===== HABIT TRACKER ===== */
+    .habit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    .habit-table th, .habit-table td {
+      padding: 7px 6px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .habit-table th {
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .habit-table th:first-child,
+    .habit-table td:first-child {
+      text-align: left;
+      font-weight: 600;
+      min-width: 100px;
+    }
+    .habit-table td:first-child {
+      color: var(--text);
+    }
+    .habit-table .total-row td {
+      font-weight: 700;
+      color: var(--accent-lilac);
+      border-bottom: none;
+    }
+    .habit-input {
+      width: 32px;
+      padding: 3px;
+      border: 1.5px solid transparent;
+      border-radius: 6px;
+      text-align: center;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.78rem;
+      background: rgba(232,160,191,0.06);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .habit-input:focus {
+      border-color: var(--accent-pink);
+      background: white;
+    }
+    .habit-input.has-value {
+      background: rgba(168,200,232,0.15);
+    }
+    .habit-delete-btn {
+      background: none;
+      border: none;
+      color: var(--accent-rose);
+      font-size: 0.9rem;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: opacity 0.2s, color 0.2s;
+      padding: 2px 4px;
+    }
+    .habit-delete-btn:hover {
+      opacity: 1;
+      color: #d46a6a;
+    }
+
+    /* Add habit row */
+    .add-habit-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .add-habit-row input {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.78rem;
+      outline: none;
+    }
+    .add-habit-row input:focus { border-color: var(--accent-pink); }
+    .add-habit-row button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent-mint), #8ac4b0);
+      color: white;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .add-habit-row button:hover { opacity: 0.85; }
+
+    /* ===== WEEKLY PRIORITIES ===== */
+    .priority-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .priority-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+    .priority-item:hover { background: rgba(196,177,224,0.1); }
+    .priority-item .bullet {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent-lilac);
+      flex-shrink: 0;
+    }
+    .priority-item span {
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+    .priority-item .delete-btn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: var(--accent-rose);
+      font-size: 0.9rem;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .priority-item:hover .delete-btn { opacity: 1; }
+
+    .add-priority-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .add-priority-row input {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.78rem;
+      outline: none;
+    }
+    .add-priority-row input:focus { border-color: var(--accent-pink); }
+    .add-priority-row button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent-lilac), var(--accent-pink));
+      color: white;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    /* ===== DAILY TO-DOS ===== */
+    .daily-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .day-card {
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      transition: box-shadow 0.2s;
+    }
+    .day-card.today {
+      border-color: var(--accent-pink);
+      box-shadow: 0 4px 20px rgba(232,160,191,0.2);
+    }
+    .day-name {
+      font-family: 'Comfortaa', cursive;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .day-name .today-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent-pink);
+      display: none;
+    }
+    .day-card.today .today-dot { display: block; }
+
+    .todo-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .todo-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+      font-size: 0.8rem;
+    }
+    .todo-item input[type="checkbox"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px; height: 16px;
+      border: 2px solid var(--accent-lilac);
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+      transition: all 0.2s;
+    }
+    .todo-item input[type="checkbox"]:checked {
+      background: var(--accent-sky);
+      border-color: var(--accent-sky);
+    }
+    .todo-item input[type="checkbox"]:checked::after {
+      content: '✓';
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .todo-item.done span {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+    .todo-item .remove-todo {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: var(--accent-rose);
+      font-size: 0.85rem;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s;
+      padding: 0 2px;
+    }
+    .todo-item:hover .remove-todo { opacity: 1; }
+
+    .add-todo-row {
+      display: flex;
+      gap: 4px;
+      margin-top: 6px;
+    }
+    .add-todo-row input {
+      flex: 1;
+      padding: 5px 8px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.75rem;
+      outline: none;
+    }
+    .add-todo-row input:focus { border-color: var(--accent-pink); }
+    .add-todo-row button {
+      padding: 5px 8px;
+      border: none;
+      border-radius: 6px;
+      background: var(--accent-mint);
+      color: white;
+      font-weight: 700;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    /* ===== CLASS TIMETABLE ===== */
+    .timetable-wrapper {
+      overflow-x: auto;
+    }
+    .timetable {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+      min-width: 600px;
+    }
+    .timetable th {
+      padding: 8px 6px;
+      font-weight: 700;
+      color: var(--accent-rose);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--border);
+      text-align: center;
+    }
+    .timetable th:first-child {
+      text-align: left;
+      color: var(--accent-sky);
+    }
+    .timetable td {
+      padding: 6px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .timetable td:first-child {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+    .class-chip {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+    .timetable-input {
+      width: 100%;
+      padding: 4px 6px;
+      border: 1.5px solid transparent;
+      border-radius: 6px;
+      text-align: center;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.73rem;
+      background: transparent;
+      color: var(--text);
+      outline: none;
+      transition: all 0.2s;
+    }
+    .timetable-input:focus {
+      border-color: var(--accent-pink);
+      background: white;
+    }
+    .timetable-input.has-value {
+      background: rgba(232,160,191,0.08);
+      border-radius: 6px;
+    }
+
+    /* Add time slot row */
+    .add-slot-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .add-slot-row input {
+      width: 120px;
+      padding: 6px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.75rem;
+      outline: none;
+    }
+    .add-slot-row input:focus { border-color: var(--accent-pink); }
+    .add-slot-row button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent-sky), #88b8d8);
+      color: white;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    /* Section spacing */
+    .section { margin-bottom: 20px; }
+    .section-title {
+      font-family: 'Comfortaa', cursive;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  </style>
 </head>
 <body>
-  <h1>PoMoBuddy</h1>
-  <form id = form>
-    <input type="text", class="input", id="input", placeholder="Enter your goal", autocomplete="off"/>
 
-    <ul class="todos", id="todos">
-      
+  <div class="planner-header">
+    <h1>📋 Weekly Planner</h1>
+    <div class="week-nav">
+      <button id="prevWeek">← Prev</button>
+      <span id="weekLabel"></span>
+      <button id="nextWeek">Next →</button>
+    </div>
+  </div>
 
-    </ul>
+  <!-- Top row: Habit Tracker + Weekly Priorities -->
+  <div class="top-row">
+    <div class="card">
+      <div class="card-title">📊 Habit Tracker</div>
+      <table class="habit-table">
+        <thead>
+          <tr>
+            <th>Habit</th>
+            <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="habitBody"></tbody>
+        <tfoot>
+          <tr class="total-row" id="habitTotals">
+            <td>Total</td>
+            <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="add-habit-row">
+        <input type="text" id="newHabitInput" placeholder="New habit..." maxlength="30">
+        <button id="addHabitBtn">+ Add</button>
+      </div>
+    </div>
 
-  </form>
-  <small>Left click to mark as complete <br> Right click to delete</small>
-  <script src ="./components/todo.js"></script>
+    <div class="card">
+      <div class="card-title">🎯 Weekly Priorities</div>
+      <ul class="priority-list" id="priorityList"></ul>
+      <div class="add-priority-row">
+        <input type="text" id="newPriorityInput" placeholder="Add priority..." maxlength="60">
+        <button id="addPriorityBtn">+ Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily To-Dos -->
+  <div class="section">
+    <div class="section-title">✅ Daily Tasks</div>
+    <div class="daily-grid" id="dailyGrid"></div>
+  </div>
+
+  <!-- Class Timetable -->
+  <div class="section">
+    <div class="card">
+      <div class="card-title">📅 Class Timetable</div>
+      <div class="timetable-wrapper">
+        <table class="timetable">
+          <thead>
+            <tr>
+              <th>TIME</th>
+              <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th>
+            </tr>
+          </thead>
+          <tbody id="timetableBody"></tbody>
+        </table>
+      </div>
+      <div class="add-slot-row">
+        <input type="text" id="newSlotInput" placeholder="e.g. 8:00-8:50" maxlength="20">
+        <button id="addSlotBtn">+ Add Slot</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+// ========================================
+// DATA PERSISTENCE (localStorage per week)
+// ========================================
+let currentWeekOffset = 0;
+
+function getWeekStart(offset = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() - ((d.getDay() + 6) % 7) + offset * 7);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function weekKey(offset = 0) {
+  const d = getWeekStart(offset);
+  return `pomobuddy_week_${d.getFullYear()}_${String(d.getMonth()+1).padStart(2,'0')}_${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function formatWeekLabel(offset) {
+  const start = getWeekStart(offset);
+  const end = new Date(start);
+  end.setDate(end.getDate() + 6);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${start.getDate()} ${months[start.getMonth()]} — ${end.getDate()} ${months[end.getMonth()]} ${end.getFullYear()}`;
+}
+
+function loadWeekData() {
+  try {
+    return JSON.parse(localStorage.getItem(weekKey(currentWeekOffset))) || {};
+  } catch { return {}; }
+}
+
+function saveWeekData(data) {
+  localStorage.setItem(weekKey(currentWeekOffset), JSON.stringify(data));
+}
+
+function getData(section, fallback) {
+  const wd = loadWeekData();
+  return wd[section] !== undefined ? wd[section] : fallback;
+}
+
+function setData(section, value) {
+  const wd = loadWeekData();
+  wd[section] = value;
+  saveWeekData(wd);
+}
+
+// Global data (not per-week)
+function getGlobal(key, fallback) {
+  try {
+    const v = localStorage.getItem('pomobuddy_' + key);
+    return v !== null ? JSON.parse(v) : fallback;
+  } catch { return fallback; }
+}
+function setGlobal(key, value) {
+  localStorage.setItem('pomobuddy_' + key, JSON.stringify(value));
+}
+
+
+// ========================================
+// HABIT TRACKER
+// ========================================
+const DAYS = ['M','T','W','T','F','S','S'];
+
+function renderHabits() {
+  const habits = getData('habits', ['CAT', 'Study Hours', 'Leetcode']);
+  const values = getData('habitValues', {});
+  const tbody = document.getElementById('habitBody');
+  tbody.innerHTML = '';
+
+  habits.forEach((habit, hi) => {
+    const tr = document.createElement('tr');
+    // Name cell
+    const nameTd = document.createElement('td');
+    nameTd.textContent = habit;
+    tr.appendChild(nameTd);
+
+    for (let d = 0; d < 7; d++) {
+      const td = document.createElement('td');
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'habit-input';
+      input.value = values[`${hi}_${d}`] || '';
+      if (input.value) input.classList.add('has-value');
+      input.addEventListener('input', () => {
+        values[`${hi}_${d}`] = input.value;
+        setData('habitValues', values);
+        input.classList.toggle('has-value', !!input.value);
+        updateHabitTotals(habits, values);
+      });
+      td.appendChild(input);
+      tr.appendChild(td);
+    }
+
+    // Delete button cell
+    const delTd = document.createElement('td');
+    const delBtn = document.createElement('button');
+    delBtn.className = 'habit-delete-btn';
+    delBtn.textContent = '×';
+    delBtn.title = `Remove ${habit}`;
+    delBtn.addEventListener('click', () => {
+      habits.splice(hi, 1);
+      setData('habits', habits);
+      for (let d = 0; d < 7; d++) delete values[`${hi}_${d}`];
+      setData('habitValues', values);
+      renderHabits();
+    });
+    delTd.appendChild(delBtn);
+    tr.appendChild(delTd);
+
+    tbody.appendChild(tr);
+  });
+
+  updateHabitTotals(habits, values);
+}
+
+function updateHabitTotals(habits, values) {
+  const row = document.getElementById('habitTotals');
+  const cells = row.querySelectorAll('td');
+  for (let d = 0; d < 7; d++) {
+    let total = 0;
+    let hasAny = false;
+    habits.forEach((_, hi) => {
+      const v = parseFloat(values[`${hi}_${d}`]);
+      if (!isNaN(v)) { total += v; hasAny = true; }
+    });
+    cells[d + 1].textContent = hasAny ? total : '—';
+  }
+}
+
+document.getElementById('addHabitBtn').addEventListener('click', () => {
+  const input = document.getElementById('newHabitInput');
+  const name = input.value.trim();
+  if (!name) return;
+  const habits = getData('habits', ['CAT', 'Study Hours', 'Leetcode']);
+  habits.push(name);
+  setData('habits', habits);
+  input.value = '';
+  renderHabits();
+});
+
+document.getElementById('newHabitInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('addHabitBtn').click();
+});
+
+
+// ========================================
+// WEEKLY PRIORITIES
+// ========================================
+function renderPriorities() {
+  const priorities = getData('priorities', []);
+  const ul = document.getElementById('priorityList');
+  ul.innerHTML = '';
+
+  priorities.forEach((p, i) => {
+    const li = document.createElement('li');
+    li.className = 'priority-item';
+    li.innerHTML = `
+      <span class="bullet"></span>
+      <span>${escapeHtml(p)}</span>
+      <button class="delete-btn" title="Remove">×</button>
+    `;
+    li.querySelector('.delete-btn').addEventListener('click', () => {
+      priorities.splice(i, 1);
+      setData('priorities', priorities);
+      renderPriorities();
+    });
+    ul.appendChild(li);
+  });
+}
+
+document.getElementById('addPriorityBtn').addEventListener('click', () => {
+  const input = document.getElementById('newPriorityInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const priorities = getData('priorities', []);
+  priorities.push(text);
+  setData('priorities', priorities);
+  input.value = '';
+  renderPriorities();
+});
+
+document.getElementById('newPriorityInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('addPriorityBtn').click();
+});
+
+
+// ========================================
+// DAILY TO-DOS (Mon—Sun)
+// ========================================
+const DAY_NAMES = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+function renderDailyTodos() {
+  const grid = document.getElementById('dailyGrid');
+  grid.innerHTML = '';
+  
+  const todayIdx = (new Date().getDay() + 6) % 7; // Mon=0
+  const isCurrentWeek = currentWeekOffset === 0;
+
+  DAY_NAMES.forEach((name, di) => {
+    const todos = getData(`todos_${di}`, []);
+    const card = document.createElement('div');
+    card.className = 'day-card' + (isCurrentWeek && di === todayIdx ? ' today' : '');
+
+    let html = `<div class="day-name"><span class="today-dot"></span>${name}</div>`;
+    html += `<ul class="todo-list">`;
+    
+    todos.forEach((t, ti) => {
+      const checked = t.done ? 'checked' : '';
+      const doneClass = t.done ? 'done' : '';
+      html += `
+        <li class="todo-item ${doneClass}" data-day="${di}" data-idx="${ti}">
+          <input type="checkbox" ${checked}>
+          <span>${escapeHtml(t.text)}</span>
+          <button class="remove-todo">×</button>
+        </li>`;
+    });
+
+    html += `</ul>`;
+    html += `<div class="add-todo-row">
+      <input type="text" placeholder="Add task..." data-day="${di}" maxlength="50">
+      <button data-day="${di}">+</button>
+    </div>`;
+
+    card.innerHTML = html;
+    grid.appendChild(card);
+
+    // Event listeners
+    card.querySelectorAll('.todo-item input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const li = cb.closest('.todo-item');
+        const idx = parseInt(li.dataset.idx);
+        todos[idx].done = cb.checked;
+        li.classList.toggle('done', cb.checked);
+        setData(`todos_${di}`, todos);
+      });
+    });
+
+    card.querySelectorAll('.remove-todo').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const li = btn.closest('.todo-item');
+        const idx = parseInt(li.dataset.idx);
+        todos.splice(idx, 1);
+        setData(`todos_${di}`, todos);
+        renderDailyTodos();
+      });
+    });
+
+    const addInput = card.querySelector('.add-todo-row input');
+    const addBtn = card.querySelector('.add-todo-row button');
+    
+    const addTodo = () => {
+      const text = addInput.value.trim();
+      if (!text) return;
+      todos.push({ text, done: false });
+      setData(`todos_${di}`, todos);
+      renderDailyTodos();
+    };
+    
+    addBtn.addEventListener('click', addTodo);
+    addInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addTodo(); });
+  });
+}
+
+
+// ========================================
+// CLASS TIMETABLE
+// ========================================
+function renderTimetable() {
+  const slots = getGlobal('timetableSlots', [
+    '8:00-8:50', '8:50-9:45', '9:45-10:40', '10:40-11:35',
+    '11:35-12:30', '12:30-1:25', '1:25-2:20', '2:20-3:10',
+    '3:10-4:00', '4:00-4:50', '4:50-5:30'
+  ]);
+  const values = getGlobal('timetableValues', {});
+  const tbody = document.getElementById('timetableBody');
+  tbody.innerHTML = '';
+
+  slots.forEach((slot, si) => {
+    const tr = document.createElement('tr');
+    const timeTd = document.createElement('td');
+    timeTd.textContent = slot;
+    timeTd.style.cursor = 'default';
+    timeTd.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      if (confirm(`Remove time slot "${slot}"?`)) {
+        slots.splice(si, 1);
+        setGlobal('timetableSlots', slots);
+        renderTimetable();
+      }
+    });
+    tr.appendChild(timeTd);
+
+    for (let d = 0; d < 5; d++) {
+      const td = document.createElement('td');
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'timetable-input';
+      input.value = values[`${si}_${d}`] || '';
+      if (input.value) input.classList.add('has-value');
+      input.addEventListener('input', () => {
+        values[`${si}_${d}`] = input.value;
+        setGlobal('timetableValues', values);
+        input.classList.toggle('has-value', !!input.value);
+      });
+      td.appendChild(input);
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('addSlotBtn').addEventListener('click', () => {
+  const input = document.getElementById('newSlotInput');
+  const slot = input.value.trim();
+  if (!slot) return;
+  const slots = getGlobal('timetableSlots', []);
+  slots.push(slot);
+  setGlobal('timetableSlots', slots);
+  input.value = '';
+  renderTimetable();
+});
+
+document.getElementById('newSlotInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('addSlotBtn').click();
+});
+
+
+// ========================================
+// WEEK NAVIGATION
+// ========================================
+function refreshAll() {
+  document.getElementById('weekLabel').textContent = formatWeekLabel(currentWeekOffset);
+  renderHabits();
+  renderPriorities();
+  renderDailyTodos();
+  renderTimetable();
+}
+
+document.getElementById('prevWeek').addEventListener('click', () => {
+  currentWeekOffset--;
+  refreshAll();
+});
+document.getElementById('nextWeek').addEventListener('click', () => {
+  currentWeekOffset++;
+  refreshAll();
+});
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// Init
+refreshAll();
+</script>
 </body>
 </html>
