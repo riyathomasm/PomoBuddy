@@ -7,428 +7,257 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f5e6f0;
-      --bg2: #ede4f3;
-      --card: rgba(255,255,255,0.65);
-      --card-solid: #fff;
-      --text: #4a3f5c;
-      --text-muted: #8a7fa0;
-      --accent-pink: #e8a0bf;
-      --accent-lilac: #c4b1e0;
-      --accent-mint: #a8d8c8;
-      --accent-peach: #f5c5a3;
-      --accent-sky: #a8c8e8;
-      --accent-rose: #e8a0a0;
+      --bg: #f5e6f0; --bg2: #ede4f3;
+      --card: rgba(255,255,255,0.65); --card-solid: #fff;
+      --text: #4a3f5c; --text-muted: #8a7fa0;
+      --accent-pink: #e8a0bf; --accent-lilac: #c4b1e0;
+      --accent-mint: #a8d8c8; --accent-peach: #f5c5a3;
+      --accent-sky: #a8c8e8; --accent-rose: #e8a0a0;
       --border: rgba(196,177,224,0.25);
       --shadow: 0 4px 20px rgba(120,100,150,0.1);
       --shadow-lg: 0 8px 32px rgba(120,100,150,0.15);
-      --radius: 16px;
-      --radius-sm: 10px;
+      --radius: 16px; --radius-sm: 10px;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
 
     body {
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(145deg, var(--bg) 0%, var(--bg2) 50%, #dfe8f5 100%);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 24px;
-      overflow-y: auto;
+      font-family:'Quicksand',sans-serif;
+      background:linear-gradient(145deg,var(--bg) 0%,var(--bg2) 50%,#dfe8f5 100%);
+      color:var(--text); min-height:100vh; padding:24px; overflow-y:auto;
     }
 
     /* Header */
-    .planner-header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
+    .planner-header { text-align:center; margin-bottom:24px; }
     .planner-header h1 {
-      font-family: 'Comfortaa', cursive;
-      font-size: 1.5rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent-pink), var(--accent-lilac));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-family:'Comfortaa',cursive; font-size:1.5rem; font-weight:700;
+      background:linear-gradient(135deg,var(--accent-pink),var(--accent-lilac));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     }
-    .week-nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 8px;
-    }
+    .week-nav { display:flex; align-items:center; justify-content:center; gap:12px; margin-top:8px; }
     .week-nav button {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 4px 12px;
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 700;
-      font-size: 0.8rem;
-      cursor: pointer;
-      color: var(--text-muted);
-      transition: all 0.2s;
+      background:var(--card); border:1px solid var(--border); border-radius:8px;
+      padding:4px 12px; font-family:'Quicksand',sans-serif; font-weight:700;
+      font-size:0.8rem; cursor:pointer; color:var(--text-muted); transition:all 0.2s;
     }
-    .week-nav button:hover {
-      background: rgba(232,160,191,0.15);
-      color: var(--text);
-    }
+    .week-nav button:hover { background:rgba(232,160,191,0.15); color:var(--text); }
     .week-nav span {
-      font-family: 'Comfortaa', cursive;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: var(--text);
-      min-width: 200px;
-      text-align: center;
+      font-family:'Comfortaa',cursive; font-weight:700; font-size:0.9rem;
+      color:var(--text); min-width:200px; text-align:center;
     }
 
     /* Top row */
-    .top-row {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
+    .top-row { display:grid; grid-template-columns:1.4fr 1fr; gap:16px; margin-bottom:16px; }
 
     .card {
-      background: var(--card);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.5);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px;
+      background:var(--card); backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,0.5); border-radius:var(--radius);
+      box-shadow:var(--shadow); padding:16px;
     }
     .card-title {
-      font-family: 'Comfortaa', cursive;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-family:'Comfortaa',cursive; font-size:0.88rem; font-weight:700;
+      color:var(--text); margin-bottom:12px;
     }
 
     /* HABIT TRACKER */
-    .habit-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
-    .habit-table th, .habit-table td { padding: 7px 6px; text-align: center; border-bottom: 1px solid var(--border); }
-    .habit-table th { font-weight: 700; color: var(--text-muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; }
-    .habit-table th:first-child, .habit-table td:first-child { text-align: left; font-weight: 600; min-width: 100px; }
-    .habit-table td:first-child { color: var(--text); }
-    .habit-table .total-row td { font-weight: 700; color: var(--accent-lilac); border-bottom: none; }
+    .habit-table { width:100%; border-collapse:collapse; font-size:0.78rem; }
+    .habit-table th, .habit-table td { padding:7px 6px; text-align:center; border-bottom:1px solid var(--border); }
+    .habit-table th { font-weight:700; color:var(--text-muted); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.5px; }
+    .habit-table th:first-child, .habit-table td:first-child { text-align:left; font-weight:600; min-width:100px; }
+    .habit-table td:first-child { color:var(--text); }
+    .habit-table .total-row td { font-weight:700; color:var(--accent-lilac); border-bottom:none; }
     .habit-input {
-      width: 32px; padding: 3px; border: 1.5px solid transparent; border-radius: 6px;
-      text-align: center; font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 0.78rem;
-      background: rgba(232,160,191,0.06); color: var(--text); outline: none; transition: border-color 0.2s, background 0.2s;
+      width:32px; padding:3px; border:1.5px solid transparent; border-radius:6px;
+      text-align:center; font-family:'Quicksand',sans-serif; font-weight:600; font-size:0.78rem;
+      background:rgba(232,160,191,0.06); color:var(--text); outline:none; transition:border-color 0.2s,background 0.2s;
     }
-    .habit-input:focus { border-color: var(--accent-pink); background: white; }
-    .habit-input.has-value { background: rgba(168,200,232,0.15); }
-    .habit-delete-btn { background: none; border: none; color: var(--accent-rose); font-size: 0.9rem; cursor: pointer; opacity: 0.4; transition: opacity 0.2s; padding: 2px 4px; }
-    .habit-delete-btn:hover { opacity: 1; color: #d46a6a; }
+    .habit-input:focus { border-color:var(--accent-pink); background:white; }
+    .habit-input.has-value { background:rgba(168,200,232,0.15); }
+    .habit-delete-btn {
+      background:none; border:none; color:var(--accent-rose); font-size:0.9rem;
+      cursor:pointer; opacity:0.4; transition:opacity 0.2s; padding:2px 4px;
+    }
+    .habit-delete-btn:hover { opacity:1; color:#d46a6a; }
+    .add-habit-row { display:flex; gap:6px; margin-top:8px; }
+    .add-habit-row input {
+      flex:1; padding:6px 10px; border:1.5px solid var(--border); border-radius:8px;
+      font-family:'Quicksand',sans-serif; font-size:0.78rem; outline:none;
+    }
+    .add-habit-row input:focus { border-color:var(--accent-pink); }
+    .add-habit-row button {
+      padding:6px 12px; border:none; border-radius:8px;
+      background:linear-gradient(135deg,var(--accent-mint),#8ac4b0);
+      color:white; font-family:'Quicksand',sans-serif; font-weight:700; font-size:0.75rem; cursor:pointer;
+    }
 
-    .add-habit-row { display: flex; gap: 6px; margin-top: 8px; }
-    .add-habit-row input { flex: 1; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'Quicksand', sans-serif; font-size: 0.78rem; outline: none; }
-    .add-habit-row input:focus { border-color: var(--accent-pink); }
-    .add-habit-row button { padding: 6px 12px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--accent-mint), #8ac4b0); color: white; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.75rem; cursor: pointer; }
+    /* MISSED TASKS */
+    .missed-card {
+      background:var(--card); backdrop-filter:blur(12px);
+      border:1px solid rgba(232,160,160,0.35); border-radius:var(--radius);
+      box-shadow:var(--shadow); padding:16px; margin-bottom:16px;
+    }
+    .missed-card .card-title { color:var(--accent-rose); }
+    .missed-empty { font-size:0.78rem; color:var(--text-muted); font-style:italic; }
+    .missed-list { display:flex; flex-direction:column; gap:5px; }
+    .missed-item {
+      display:flex; align-items:center; gap:10px; padding:6px 10px;
+      background:rgba(232,160,160,0.07); border-radius:8px;
+      font-size:0.8rem;
+    }
+    .missed-day-tag {
+      font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px;
+      color:var(--accent-rose); background:rgba(232,160,160,0.15);
+      border-radius:6px; padding:2px 7px; white-space:nowrap; flex-shrink:0;
+    }
+    .missed-text { color:var(--text); font-weight:500; }
+    .missed-reschedule {
+      margin-left:auto; background:none; border:none; font-size:0.72rem;
+      color:var(--accent-sky); font-weight:600; cursor:pointer; opacity:0.7; transition:opacity 0.2s;
+      white-space:nowrap;
+    }
+    .missed-reschedule:hover { opacity:1; }
 
     /* WEEKLY PRIORITIES */
-    .priority-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
-    .priority-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px; transition: background 0.15s; }
-    .priority-item:hover { background: rgba(196,177,224,0.1); }
-    .priority-item .bullet { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-lilac); flex-shrink: 0; }
-    .priority-item span { font-size: 0.82rem; font-weight: 500; }
-    .priority-item .delete-btn { margin-left: auto; background: none; border: none; color: var(--accent-rose); font-size: 0.9rem; cursor: pointer; opacity: 0; transition: opacity 0.2s; }
-    .priority-item:hover .delete-btn { opacity: 1; }
-
-    .add-priority-row { display: flex; gap: 6px; margin-top: 8px; }
-    .add-priority-row input { flex: 1; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'Quicksand', sans-serif; font-size: 0.78rem; outline: none; }
-    .add-priority-row input:focus { border-color: var(--accent-pink); }
-    .add-priority-row button { padding: 6px 12px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--accent-lilac), var(--accent-pink)); color: white; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.75rem; cursor: pointer; }
+    .priority-list { list-style:none; display:flex; flex-direction:column; gap:5px; }
+    .priority-item { display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:8px; transition:background 0.15s; }
+    .priority-item:hover { background:rgba(196,177,224,0.1); }
+    .priority-item .bullet { width:7px; height:7px; border-radius:50%; background:var(--accent-lilac); flex-shrink:0; }
+    .priority-item span { font-size:0.82rem; font-weight:500; }
+    .priority-item .delete-btn { margin-left:auto; background:none; border:none; color:var(--accent-rose); font-size:0.9rem; cursor:pointer; opacity:0; transition:opacity 0.2s; }
+    .priority-item:hover .delete-btn { opacity:1; }
+    .add-priority-row { display:flex; gap:6px; margin-top:8px; }
+    .add-priority-row input {
+      flex:1; padding:6px 10px; border:1.5px solid var(--border); border-radius:8px;
+      font-family:'Quicksand',sans-serif; font-size:0.78rem; outline:none;
+    }
+    .add-priority-row input:focus { border-color:var(--accent-pink); }
+    .add-priority-row button {
+      padding:6px 12px; border:none; border-radius:8px;
+      background:linear-gradient(135deg,var(--accent-lilac),var(--accent-pink));
+      color:white; font-family:'Quicksand',sans-serif; font-weight:700; font-size:0.75rem; cursor:pointer;
+    }
 
     /* DAILY TO-DOS */
-    .daily-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
-    .day-card { background: var(--card); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.5); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px; }
-    .day-card.today { border-color: var(--accent-pink); box-shadow: 0 4px 20px rgba(232,160,191,0.2); }
-    .day-name { font-family: 'Comfortaa', cursive; font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-    .day-name .today-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-pink); display: none; }
-    .day-card.today .today-dot { display: block; }
-
-    .todo-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-    .todo-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 0.8rem; }
+    .daily-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px; margin-bottom:16px; }
+    .day-card { background:var(--card); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.5); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px; }
+    .day-card.today { border-color:var(--accent-pink); box-shadow:0 4px 20px rgba(232,160,191,0.2); }
+    .day-name { font-family:'Comfortaa',cursive; font-size:0.85rem; font-weight:700; color:var(--text); margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+    .day-name .today-dot { width:6px; height:6px; border-radius:50%; background:var(--accent-pink); display:none; }
+    .day-card.today .today-dot { display:block; }
+    .todo-list { list-style:none; display:flex; flex-direction:column; gap:4px; }
+    .todo-item { display:flex; align-items:center; gap:8px; padding:4px 0; font-size:0.8rem; }
     .todo-item input[type="checkbox"] {
-      -webkit-appearance: none; appearance: none; width: 16px; height: 16px;
-      border: 2px solid var(--accent-lilac); border-radius: 4px; cursor: pointer; flex-shrink: 0; position: relative; transition: all 0.2s;
+      -webkit-appearance:none; appearance:none; width:16px; height:16px;
+      border:2px solid var(--accent-lilac); border-radius:4px; cursor:pointer; flex-shrink:0; position:relative; transition:all 0.2s;
     }
-    .todo-item input[type="checkbox"]:checked { background: var(--accent-sky); border-color: var(--accent-sky); }
-    .todo-item input[type="checkbox"]:checked::after { content: '✓'; color: white; font-size: 0.65rem; font-weight: 700; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-    .todo-item.done span { text-decoration: line-through; color: var(--text-muted); }
-    .todo-item .remove-todo { margin-left: auto; background: none; border: none; color: var(--accent-rose); font-size: 0.85rem; cursor: pointer; opacity: 0; transition: opacity 0.15s; padding: 0 2px; }
-    .todo-item:hover .remove-todo { opacity: 1; }
-
-    .add-todo-row { display: flex; gap: 4px; margin-top: 6px; }
-    .add-todo-row input { flex: 1; padding: 5px 8px; border: 1.5px solid var(--border); border-radius: 6px; font-family: 'Quicksand', sans-serif; font-size: 0.75rem; outline: none; }
-    .add-todo-row input:focus { border-color: var(--accent-pink); }
-    .add-todo-row button { padding: 5px 8px; border: none; border-radius: 6px; background: var(--accent-mint); color: white; font-weight: 700; font-size: 0.75rem; cursor: pointer; }
+    .todo-item input[type="checkbox"]:checked { background:var(--accent-sky); border-color:var(--accent-sky); }
+    .todo-item input[type="checkbox"]:checked::after { content:'✓'; color:white; font-size:0.65rem; font-weight:700; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+    .todo-item.done span { text-decoration:line-through; color:var(--text-muted); }
+    .todo-item .remove-todo { margin-left:auto; background:none; border:none; color:var(--accent-rose); font-size:0.85rem; cursor:pointer; opacity:0; transition:opacity 0.15s; padding:0 2px; }
+    .todo-item:hover .remove-todo { opacity:1; }
+    .add-todo-row { display:flex; gap:4px; margin-top:6px; }
+    .add-todo-row input { flex:1; padding:5px 8px; border:1.5px solid var(--border); border-radius:6px; font-family:'Quicksand',sans-serif; font-size:0.75rem; outline:none; }
+    .add-todo-row input:focus { border-color:var(--accent-pink); }
+    .add-todo-row button { padding:5px 8px; border:none; border-radius:6px; background:var(--accent-mint); color:white; font-weight:700; font-size:0.75rem; cursor:pointer; }
 
     /* CLASS TIMETABLE */
-    .timetable-wrapper { overflow-x: auto; }
-    .timetable { width: 100%; border-collapse: collapse; font-size: 0.75rem; min-width: 600px; }
-    .timetable th { padding: 8px 6px; font-weight: 700; color: var(--accent-rose); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--border); text-align: center; }
-    .timetable th:first-child { text-align: left; color: var(--accent-sky); }
-    .timetable td { padding: 6px; text-align: center; border-bottom: 1px solid var(--border); vertical-align: middle; }
-    .timetable td:first-child { text-align: left; font-weight: 600; color: var(--text-muted); font-size: 0.72rem; white-space: nowrap; }
+    .timetable-wrapper { overflow-x:auto; }
+    .timetable { width:100%; border-collapse:collapse; font-size:0.75rem; min-width:600px; }
+    .timetable th { padding:8px 6px; font-weight:700; color:var(--accent-rose); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.5px; border-bottom:2px solid var(--border); text-align:center; }
+    .timetable th:first-child { text-align:left; color:var(--accent-sky); }
+    .timetable td { padding:6px; text-align:center; border-bottom:1px solid var(--border); vertical-align:middle; }
+    .timetable td:first-child { text-align:left; font-weight:600; color:var(--text-muted); font-size:0.72rem; white-space:nowrap; }
     .timetable-input {
-      width: 100%; padding: 4px 6px; border: 1.5px solid transparent; border-radius: 6px; text-align: center;
-      font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 0.73rem; background: transparent; color: var(--text); outline: none; transition: all 0.2s;
+      width:100%; padding:4px 6px; border:1.5px solid transparent; border-radius:6px; text-align:center;
+      font-family:'Quicksand',sans-serif; font-weight:600; font-size:0.73rem; background:transparent; color:var(--text); outline:none; transition:all 0.2s;
     }
-    .timetable-input:focus { border-color: var(--accent-pink); background: white; }
-    .timetable-input.has-value { background: rgba(232,160,191,0.08); }
+    .timetable-input:focus { border-color:var(--accent-pink); background:white; }
+    .timetable-input.has-value { background:rgba(232,160,191,0.08); }
+    .add-slot-row { display:flex; gap:6px; margin-top:8px; }
+    .add-slot-row input { width:120px; padding:6px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'Quicksand',sans-serif; font-size:0.75rem; outline:none; }
+    .add-slot-row input:focus { border-color:var(--accent-pink); }
+    .add-slot-row button { padding:6px 12px; border:none; border-radius:8px; background:linear-gradient(135deg,var(--accent-sky),#88b8d8); color:white; font-family:'Quicksand',sans-serif; font-weight:700; font-size:0.75rem; cursor:pointer; }
 
-    .add-slot-row { display: flex; gap: 6px; margin-top: 8px; }
-    .add-slot-row input { width: 120px; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'Quicksand', sans-serif; font-size: 0.75rem; outline: none; }
-    .add-slot-row input:focus { border-color: var(--accent-pink); }
-    .add-slot-row button { padding: 6px 12px; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--accent-sky), #88b8d8); color: white; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.75rem; cursor: pointer; }
-
-    .section { margin-bottom: 20px; }
-    .section-title { font-family: 'Comfortaa', cursive; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .section { margin-bottom:20px; }
+    .section-title { font-family:'Comfortaa',cursive; font-size:0.9rem; font-weight:700; color:var(--text); margin-bottom:12px; }
 
     /* ===== GABE CHAT PANEL ===== */
     .gabe-toggle {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent-lilac), var(--accent-pink));
-      border: none;
-      box-shadow: var(--shadow-lg);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s, box-shadow 0.2s;
-      z-index: 1000;
-      padding: 0;
-      overflow: hidden;
+      position:fixed; bottom:24px; right:24px;
+      width:56px; height:56px; border-radius:50%;
+      background:linear-gradient(135deg,var(--accent-lilac),var(--accent-pink));
+      border:none; box-shadow:var(--shadow-lg); cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:transform 0.2s,box-shadow 0.2s; z-index:1000; padding:0; overflow:hidden;
     }
-    .gabe-toggle:hover {
-      transform: scale(1.08);
-      box-shadow: 0 8px 36px rgba(120,100,150,0.25);
-    }
-    .gabe-toggle img {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+    .gabe-toggle:hover { transform:scale(1.08); box-shadow:0 8px 36px rgba(120,100,150,0.25); }
+    .gabe-toggle img { width:48px; height:48px; border-radius:50%; object-fit:cover; }
     .gabe-toggle .gabe-notif {
-      position: absolute;
-      top: -2px;
-      right: -2px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--accent-rose);
-      border: 2px solid var(--bg);
-      display: none;
+      position:absolute; top:-2px; right:-2px; width:14px; height:14px;
+      border-radius:50%; background:var(--accent-rose); border:2px solid var(--bg); display:none;
     }
-    .gabe-toggle .gabe-notif.show { display: block; }
+    .gabe-toggle .gabe-notif.show { display:block; }
 
     .gabe-panel {
-      position: fixed;
-      top: 0;
-      right: -380px;
-      width: 370px;
-      height: 100vh;
-      background: linear-gradient(180deg, #f8f0f5 0%, #efe4f3 100%);
-      border-left: 1px solid var(--border);
-      box-shadow: -4px 0 24px rgba(120,100,150,0.12);
-      z-index: 999;
-      display: flex;
-      flex-direction: column;
-      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-family: 'Quicksand', sans-serif;
+      position:fixed; bottom:90px; right:24px; width:340px; height:440px;
+      background:linear-gradient(180deg,#f8f0f5 0%,#efe4f3 100%);
+      border:1px solid var(--border); border-radius:20px;
+      box-shadow:0 12px 48px rgba(120,100,150,0.2); z-index:999;
+      display:flex; flex-direction:column; font-family:'Quicksand',sans-serif;
+      opacity:0; transform:translateY(12px) scale(0.95); pointer-events:none;
+      transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1); overflow:hidden;
     }
-    .gabe-panel.open { right: 0; }
+    .gabe-panel.open { opacity:1; transform:translateY(0) scale(1); pointer-events:all; }
 
-    .gabe-header {
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.5);
-    }
-    .gabe-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .gabe-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .gabe-header-info h3 {
-      font-family: 'Comfortaa', cursive;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--text);
-      margin: 0;
-    }
-    .gabe-header-info span {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
-    .gabe-close {
-      margin-left: auto;
-      background: none;
-      border: none;
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 6px;
-      transition: background 0.15s;
-    }
-    .gabe-close:hover { background: rgba(196,177,224,0.15); }
+    .gabe-header { padding:16px 18px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.5); }
+    .gabe-avatar { width:40px; height:40px; border-radius:50%; overflow:hidden; flex-shrink:0; }
+    .gabe-avatar img { width:100%; height:100%; object-fit:cover; }
+    .gabe-header-info h3 { font-family:'Comfortaa',cursive; font-size:0.88rem; font-weight:700; color:var(--text); margin:0; }
+    .gabe-header-info span { font-size:0.7rem; color:var(--text-muted); }
+    .gabe-close { margin-left:auto; background:none; border:none; font-size:1.2rem; color:var(--text-muted); cursor:pointer; padding:4px 8px; border-radius:6px; transition:background 0.15s; }
+    .gabe-close:hover { background:rgba(196,177,224,0.15); }
 
-    .gabe-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .gabe-msg {
-      max-width: 85%;
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 0.8rem;
-      line-height: 1.5;
-      word-wrap: break-word;
-    }
-    .gabe-msg.gabe {
-      background: rgba(255,255,255,0.7);
-      border: 1px solid rgba(196,177,224,0.2);
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
-      color: var(--text);
-    }
-    .gabe-msg.user {
-      background: linear-gradient(135deg, var(--accent-lilac), var(--accent-pink));
-      color: white;
-      align-self: flex-end;
-      border-bottom-right-radius: 4px;
-    }
-    .gabe-msg.gabe .typing-dots span {
-      display: inline-block;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent-lilac);
-      margin: 0 2px;
-      animation: gabeBounce 1.2s infinite;
-    }
-    .gabe-msg.gabe .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
-    .gabe-msg.gabe .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
-    @keyframes gabeBounce {
-      0%, 60%, 100% { transform: translateY(0); }
-      30% { transform: translateY(-5px); }
-    }
+    .gabe-messages { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; }
+    .gabe-msg { max-width:85%; padding:10px 14px; border-radius:14px; font-size:0.8rem; line-height:1.5; word-wrap:break-word; }
+    .gabe-msg.gabe { background:rgba(255,255,255,0.7); border:1px solid rgba(196,177,224,0.2); align-self:flex-start; border-bottom-left-radius:4px; color:var(--text); }
+    .gabe-msg.user { background:linear-gradient(135deg,var(--accent-lilac),var(--accent-pink)); color:white; align-self:flex-end; border-bottom-right-radius:4px; }
+    .gabe-msg.gabe .typing-dots span { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent-lilac); margin:0 2px; animation:gabeBounce 1.2s infinite; }
+    .gabe-msg.gabe .typing-dots span:nth-child(2) { animation-delay:0.15s; }
+    .gabe-msg.gabe .typing-dots span:nth-child(3) { animation-delay:0.3s; }
+    @keyframes gabeBounce { 0%,60%,100% { transform:translateY(0); } 30% { transform:translateY(-5px); } }
 
-    .gabe-input-row {
-      padding: 12px 16px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      gap: 8px;
-      background: rgba(255,255,255,0.5);
-    }
-    .gabe-input-row input {
-      flex: 1;
-      padding: 10px 14px;
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
-      font-family: 'Quicksand', sans-serif;
-      font-size: 0.8rem;
-      outline: none;
-      background: white;
-      color: var(--text);
-    }
-    .gabe-input-row input:focus { border-color: var(--accent-pink); }
-    .gabe-input-row button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 20px;
-      background: linear-gradient(135deg, var(--accent-lilac), var(--accent-pink));
-      color: white;
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 700;
-      font-size: 0.78rem;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .gabe-input-row button:hover { opacity: 0.85; }
-    .gabe-input-row button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .gabe-input-row { padding:12px 16px; border-top:1px solid var(--border); display:flex; gap:8px; background:rgba(255,255,255,0.5); }
+    .gabe-input-row input { flex:1; padding:10px 14px; border:1.5px solid var(--border); border-radius:20px; font-family:'Quicksand',sans-serif; font-size:0.8rem; outline:none; background:white; color:var(--text); }
+    .gabe-input-row input:focus { border-color:var(--accent-pink); }
+    .gabe-input-row button { padding:10px 16px; border:none; border-radius:20px; background:linear-gradient(135deg,var(--accent-lilac),var(--accent-pink)); color:white; font-family:'Quicksand',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer; transition:opacity 0.2s; }
+    .gabe-input-row button:hover { opacity:0.85; }
+    .gabe-input-row button:disabled { opacity:0.5; cursor:not-allowed; }
 
-    /* Nudge toast */
     .gabe-nudge {
-      position: fixed;
-      bottom: 90px;
-      right: 24px;
-      max-width: 280px;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      box-shadow: var(--shadow-lg);
-      padding: 12px 16px;
-      font-family: 'Quicksand', sans-serif;
-      font-size: 0.78rem;
-      color: var(--text);
-      z-index: 998;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.3s;
-      pointer-events: none;
-      cursor: pointer;
+      position:fixed; bottom:90px; right:24px; max-width:280px;
+      background:rgba(255,255,255,0.92); backdrop-filter:blur(12px);
+      border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow-lg);
+      padding:12px 16px; font-family:'Quicksand',sans-serif; font-size:0.78rem; color:var(--text);
+      z-index:998; opacity:0; transform:translateY(10px); transition:all 0.3s; pointer-events:none; cursor:pointer;
     }
-    .gabe-nudge.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    .gabe-nudge .nudge-header {
-      font-weight: 700;
-      font-size: 0.72rem;
-      color: var(--accent-lilac);
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .gabe-nudge .nudge-header img {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    body.gabe-open { padding-right: 394px; }
+    .gabe-nudge.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+    .gabe-nudge .nudge-header { font-weight:700; font-size:0.72rem; color:var(--accent-lilac); margin-bottom:4px; display:flex; align-items:center; gap:6px; }
+    .gabe-nudge .nudge-header img { width:18px; height:18px; border-radius:50%; object-fit:cover; }
   </style>
 </head>
 <body>
 
   <div class="planner-header">
-    <h1>📋 Weekly Planner</h1>
+    <h1>Weekly Planner</h1>
     <div class="week-nav">
-      <button id="prevWeek">← Prev</button>
+      <button id="prevWeek">Prev</button>
       <span id="weekLabel"></span>
-      <button id="nextWeek">Next →</button>
+      <button id="nextWeek">Next</button>
     </div>
   </div>
 
   <div class="top-row">
     <div class="card">
-      <div class="card-title">📊 Habit Tracker</div>
+      <div class="card-title">Habit Tracker</div>
       <table class="habit-table">
         <thead><tr><th>Habit</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th><th></th></tr></thead>
         <tbody id="habitBody"></tbody>
@@ -440,7 +269,7 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-title">🎯 Weekly Priorities</div>
+      <div class="card-title">Weekly Priorities</div>
       <ul class="priority-list" id="priorityList"></ul>
       <div class="add-priority-row">
         <input type="text" id="newPriorityInput" placeholder="Add priority..." maxlength="60">
@@ -449,14 +278,20 @@
     </div>
   </div>
 
+  <!-- MISSED TASKS — shown when viewing current week and previous days have uncompleted tasks -->
+  <div class="missed-card" id="missedCard">
+    <div class="card-title">Missed Tasks</div>
+    <div id="missedTasksList"></div>
+  </div>
+
   <div class="section">
-    <div class="section-title">✅ Daily Tasks</div>
+    <div class="section-title">Daily Tasks</div>
     <div class="daily-grid" id="dailyGrid"></div>
   </div>
 
   <div class="section">
     <div class="card">
-      <div class="card-title">📅 Class Timetable</div>
+      <div class="card-title">Class Timetable</div>
       <div class="timetable-wrapper">
         <table class="timetable">
           <thead><tr><th>TIME</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr></thead>
@@ -477,18 +312,18 @@
   </button>
 
   <div class="gabe-nudge" id="gabeNudge">
-    <div class="nudge-header"><img src="./animations/gabe.jpg" alt="Gabe"> Gabe says...</div>
+    <div class="nudge-header"><img src="./animations/gabe.png" alt="Gabe"> Gabe says...</div>
     <div id="nudgeText"></div>
   </div>
 
   <div class="gabe-panel" id="gabePanel">
     <div class="gabe-header">
-      <div class="gabe-avatar"><img src="./animations/gabe.jpg" alt="Gabe"></div>
+      <div class="gabe-avatar"><img src="./animations/gabe.png" alt="Gabe"></div>
       <div class="gabe-header-info">
         <h3>Gabe</h3>
         <span>sleepy but caring blob</span>
       </div>
-      <button class="gabe-close" id="gabeClose">✕</button>
+      <button class="gabe-close" id="gabeClose">x</button>
     </div>
     <div class="gabe-messages" id="gabeMessages"></div>
     <div class="gabe-input-row">
@@ -497,6 +332,7 @@
     </div>
   </div>
 
+<script src="./gabe.config.js"></script>
 <script>
 // ========================================
 // DATA PERSISTENCE
@@ -506,29 +342,28 @@ let currentWeekOffset = 0;
 function getWeekStart(offset = 0) {
   const d = new Date();
   d.setDate(d.getDate() - ((d.getDay() + 6) % 7) + offset * 7);
-  d.setHours(0, 0, 0, 0);
+  d.setHours(0,0,0,0);
   return d;
 }
-
 function weekKey(offset = 0) {
   const d = getWeekStart(offset);
   return `pomobuddy_week_${d.getFullYear()}_${String(d.getMonth()+1).padStart(2,'0')}_${String(d.getDate()).padStart(2,'0')}`;
 }
-
 function formatWeekLabel(offset) {
-  const start = getWeekStart(offset);
-  const end = new Date(start);
+  const start = getWeekStart(offset), end = new Date(start);
   end.setDate(end.getDate() + 6);
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return `${start.getDate()} ${months[start.getMonth()]} — ${end.getDate()} ${months[end.getMonth()]} ${end.getFullYear()}`;
+  const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${start.getDate()} ${M[start.getMonth()]} — ${end.getDate()} ${M[end.getMonth()]} ${end.getFullYear()}`;
 }
-
 function loadWeekData() { try { return JSON.parse(localStorage.getItem(weekKey(currentWeekOffset))) || {}; } catch { return {}; } }
 function saveWeekData(data) { localStorage.setItem(weekKey(currentWeekOffset), JSON.stringify(data)); }
 function getData(section, fallback) { const wd = loadWeekData(); return wd[section] !== undefined ? wd[section] : fallback; }
 function setData(section, value) { const wd = loadWeekData(); wd[section] = value; saveWeekData(wd); }
 function getGlobal(key, fallback) { try { const v = localStorage.getItem('pomobuddy_' + key); return v !== null ? JSON.parse(v) : fallback; } catch { return fallback; } }
 function setGlobal(key, value) { localStorage.setItem('pomobuddy_' + key, JSON.stringify(value)); }
+function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+
+const DAY_NAMES = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 
 // ========================================
 // HABIT TRACKER
@@ -536,71 +371,94 @@ function setGlobal(key, value) { localStorage.setItem('pomobuddy_' + key, JSON.s
 function renderHabits() {
   const habits = getData('habits', ['CAT', 'Study Hours', 'Leetcode']);
   const values = getData('habitValues', {});
-  const tbody = document.getElementById('habitBody');
+  const tbody  = document.getElementById('habitBody');
   tbody.innerHTML = '';
-
   habits.forEach((habit, hi) => {
     const tr = document.createElement('tr');
-    const nameTd = document.createElement('td');
-    nameTd.textContent = habit;
-    tr.appendChild(nameTd);
-
+    const nameTd = document.createElement('td'); nameTd.textContent = habit; tr.appendChild(nameTd);
     for (let d = 0; d < 7; d++) {
-      const td = document.createElement('td');
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.className = 'habit-input';
-      input.value = values[`${hi}_${d}`] || '';
+      const td = document.createElement('td'), input = document.createElement('input');
+      input.type = 'text'; input.className = 'habit-input'; input.value = values[`${hi}_${d}`] || '';
       if (input.value) input.classList.add('has-value');
-      input.addEventListener('input', () => {
-        values[`${hi}_${d}`] = input.value;
-        setData('habitValues', values);
-        input.classList.toggle('has-value', !!input.value);
-        updateHabitTotals(habits, values);
-      });
-      td.appendChild(input);
-      tr.appendChild(td);
+      input.addEventListener('input', () => { values[`${hi}_${d}`] = input.value; setData('habitValues', values); input.classList.toggle('has-value', !!input.value); updateHabitTotals(habits, values); });
+      td.appendChild(input); tr.appendChild(td);
     }
-
-    const delTd = document.createElement('td');
-    const delBtn = document.createElement('button');
-    delBtn.className = 'habit-delete-btn';
-    delBtn.textContent = '×';
-    delBtn.title = `Remove ${habit}`;
-    delBtn.addEventListener('click', () => {
-      habits.splice(hi, 1);
-      setData('habits', habits);
-      for (let d = 0; d < 7; d++) delete values[`${hi}_${d}`];
-      setData('habitValues', values);
-      renderHabits();
-    });
-    delTd.appendChild(delBtn);
-    tr.appendChild(delTd);
-    tbody.appendChild(tr);
+    const delTd = document.createElement('td'), delBtn = document.createElement('button');
+    delBtn.className = 'habit-delete-btn'; delBtn.textContent = 'x'; delBtn.title = `Remove ${habit}`;
+    delBtn.addEventListener('click', () => { habits.splice(hi, 1); setData('habits', habits); for (let d = 0; d < 7; d++) delete values[`${hi}_${d}`]; setData('habitValues', values); renderHabits(); });
+    delTd.appendChild(delBtn); tr.appendChild(delTd); tbody.appendChild(tr);
   });
   updateHabitTotals(habits, values);
 }
-
 function updateHabitTotals(habits, values) {
   const cells = document.getElementById('habitTotals').querySelectorAll('td');
   for (let d = 0; d < 7; d++) {
     let total = 0, hasAny = false;
-    habits.forEach((_, hi) => { const v = parseFloat(values[`${hi}_${d}`]); if (!isNaN(v)) { total += v; hasAny = true; } });
-    cells[d + 1].textContent = hasAny ? total : '—';
+    habits.forEach((_,hi) => { const v = parseFloat(values[`${hi}_${d}`]); if (!isNaN(v)) { total += v; hasAny = true; } });
+    cells[d+1].textContent = hasAny ? total : '—';
   }
 }
-
 document.getElementById('addHabitBtn').addEventListener('click', () => {
-  const input = document.getElementById('newHabitInput');
-  const name = input.value.trim();
+  const input = document.getElementById('newHabitInput'), name = input.value.trim();
   if (!name) return;
-  const habits = getData('habits', ['CAT', 'Study Hours', 'Leetcode']);
-  habits.push(name);
-  setData('habits', habits);
-  input.value = '';
-  renderHabits();
+  const habits = getData('habits', ['CAT','Study Hours','Leetcode']); habits.push(name); setData('habits', habits); input.value = ''; renderHabits();
 });
-document.getElementById('newHabitInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') document.getElementById('addHabitBtn').click(); });
+document.getElementById('newHabitInput').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('addHabitBtn').click(); });
+
+// ========================================
+// MISSED TASKS
+// ========================================
+function renderMissedTasks() {
+  const card = document.getElementById('missedCard');
+  const container = document.getElementById('missedTasksList');
+  container.innerHTML = '';
+
+  // Only show for current week
+  if (currentWeekOffset !== 0) { card.style.display = 'none'; return; }
+
+  const todayIdx = (new Date().getDay() + 6) % 7; // Monday=0
+  const missed   = [];
+
+  for (let d = 0; d < todayIdx; d++) {
+    const todos    = getData(`todos_${d}`, []);
+    const pending  = todos.filter(t => !t.done);
+    pending.forEach(t => missed.push({ day: DAY_NAMES[d], text: t.text, dayIdx: d }));
+  }
+
+  card.style.display = missed.length === 0 ? 'none' : 'block';
+
+  if (missed.length === 0) return;
+
+  const list = document.createElement('div');
+  list.className = 'missed-list';
+  missed.forEach(({ day, text, dayIdx }) => {
+    const item = document.createElement('div');
+    item.className = 'missed-item';
+    item.innerHTML = `
+      <span class="missed-day-tag">${day.slice(0,3)}</span>
+      <span class="missed-text">${escapeHtml(text)}</span>
+      <button class="missed-reschedule" data-day="${dayIdx}" data-text="${escapeHtml(text)}">Move to today</button>`;
+    list.appendChild(item);
+  });
+  container.appendChild(list);
+
+  // "Move to today" — adds the task to today's list
+  container.querySelectorAll('.missed-reschedule').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text    = btn.dataset.text;
+      const fromDay = parseInt(btn.dataset.day);
+      const todayTodos = getData(`todos_${todayIdx}`, []);
+      todayTodos.push({ text, done: false });
+      setData(`todos_${todayIdx}`, todayTodos);
+      // Remove from source day
+      const srcTodos = getData(`todos_${fromDay}`, []);
+      const idx = srcTodos.findIndex(t => !t.done && t.text === text);
+      if (idx !== -1) { srcTodos.splice(idx, 1); setData(`todos_${fromDay}`, srcTodos); }
+      renderMissedTasks();
+      renderDailyTodos();
+    });
+  });
+}
 
 // ========================================
 // WEEKLY PRIORITIES
@@ -610,62 +468,58 @@ function renderPriorities() {
   const ul = document.getElementById('priorityList');
   ul.innerHTML = '';
   priorities.forEach((p, i) => {
-    const li = document.createElement('li');
-    li.className = 'priority-item';
-    li.innerHTML = `<span class="bullet"></span><span>${escapeHtml(p)}</span><button class="delete-btn" title="Remove">×</button>`;
+    const li = document.createElement('li'); li.className = 'priority-item';
+    li.innerHTML = `<span class="bullet"></span><span>${escapeHtml(p)}</span><button class="delete-btn" title="Remove">x</button>`;
     li.querySelector('.delete-btn').addEventListener('click', () => { priorities.splice(i, 1); setData('priorities', priorities); renderPriorities(); });
     ul.appendChild(li);
   });
 }
-
 document.getElementById('addPriorityBtn').addEventListener('click', () => {
-  const input = document.getElementById('newPriorityInput');
-  const text = input.value.trim();
+  const input = document.getElementById('newPriorityInput'), text = input.value.trim();
   if (!text) return;
-  const priorities = getData('priorities', []);
-  priorities.push(text);
-  setData('priorities', priorities);
-  input.value = '';
-  renderPriorities();
+  const priorities = getData('priorities', []); priorities.push(text); setData('priorities', priorities); input.value = ''; renderPriorities();
 });
-document.getElementById('newPriorityInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') document.getElementById('addPriorityBtn').click(); });
+document.getElementById('newPriorityInput').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('addPriorityBtn').click(); });
 
 // ========================================
 // DAILY TO-DOS
 // ========================================
-const DAY_NAMES = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-
 function renderDailyTodos() {
   const grid = document.getElementById('dailyGrid');
   grid.innerHTML = '';
-  const todayIdx = (new Date().getDay() + 6) % 7;
-  const isCurrentWeek = currentWeekOffset === 0;
+  const todayIdx     = (new Date().getDay() + 6) % 7;
+  const isCurrentWk  = currentWeekOffset === 0;
 
   DAY_NAMES.forEach((name, di) => {
     const todos = getData(`todos_${di}`, []);
-    const card = document.createElement('div');
-    card.className = 'day-card' + (isCurrentWeek && di === todayIdx ? ' today' : '');
+    const card  = document.createElement('div');
+    card.className = 'day-card' + (isCurrentWk && di === todayIdx ? ' today' : '');
 
     let html = `<div class="day-name"><span class="today-dot"></span>${name}</div><ul class="todo-list">`;
     todos.forEach((t, ti) => {
       html += `<li class="todo-item ${t.done ? 'done' : ''}" data-day="${di}" data-idx="${ti}">
-        <input type="checkbox" ${t.done ? 'checked' : ''}><span>${escapeHtml(t.text)}</span><button class="remove-todo">×</button></li>`;
+        <input type="checkbox" ${t.done ? 'checked' : ''}><span>${escapeHtml(t.text)}</span>
+        <button class="remove-todo">x</button></li>`;
     });
     html += `</ul><div class="add-todo-row"><input type="text" placeholder="Add task..." data-day="${di}" maxlength="50"><button data-day="${di}">+</button></div>`;
     card.innerHTML = html;
     grid.appendChild(card);
 
     card.querySelectorAll('.todo-item input[type="checkbox"]').forEach(cb => {
-      cb.addEventListener('change', () => { const li = cb.closest('.todo-item'); const idx = parseInt(li.dataset.idx); todos[idx].done = cb.checked; li.classList.toggle('done', cb.checked); setData(`todos_${di}`, todos); });
+      cb.addEventListener('change', () => {
+        const li = cb.closest('.todo-item'), idx = parseInt(li.dataset.idx);
+        todos[idx].done = cb.checked; li.classList.toggle('done', cb.checked);
+        setData(`todos_${di}`, todos);
+        renderMissedTasks(); // refresh missed when tasks are checked
+      });
     });
     card.querySelectorAll('.remove-todo').forEach(btn => {
-      btn.addEventListener('click', () => { const idx = parseInt(btn.closest('.todo-item').dataset.idx); todos.splice(idx, 1); setData(`todos_${di}`, todos); renderDailyTodos(); });
+      btn.addEventListener('click', () => { const idx = parseInt(btn.closest('.todo-item').dataset.idx); todos.splice(idx, 1); setData(`todos_${di}`, todos); renderDailyTodos(); renderMissedTasks(); });
     });
-    const addInput = card.querySelector('.add-todo-row input');
-    const addBtn = card.querySelector('.add-todo-row button');
-    const addTodo = () => { const text = addInput.value.trim(); if (!text) return; todos.push({ text, done: false }); setData(`todos_${di}`, todos); renderDailyTodos(); };
+    const addInput = card.querySelector('.add-todo-row input'), addBtn = card.querySelector('.add-todo-row button');
+    const addTodo = () => { const text = addInput.value.trim(); if (!text) return; todos.push({ text, done: false }); setData(`todos_${di}`, todos); renderDailyTodos(); renderMissedTasks(); };
     addBtn.addEventListener('click', addTodo);
-    addInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addTodo(); });
+    addInput.addEventListener('keydown', e => { if (e.key === 'Enter') addTodo(); });
   });
 }
 
@@ -673,20 +527,17 @@ function renderDailyTodos() {
 // CLASS TIMETABLE
 // ========================================
 function renderTimetable() {
-  const slots = getGlobal('timetableSlots', ['8:00-8:50','8:50-9:45','9:45-10:40','10:40-11:35','11:35-12:30','12:30-1:25','1:25-2:20','2:20-3:10','3:10-4:00','4:00-4:50','4:50-5:30']);
+  const slots  = getGlobal('timetableSlots', ['8:00-8:50','8:50-9:45','9:45-10:40','10:40-11:35','11:35-12:30','12:30-1:25','1:25-2:20','2:20-3:10','3:10-4:00','4:00-4:50','4:50-5:30']);
   const values = getGlobal('timetableValues', {});
-  const tbody = document.getElementById('timetableBody');
+  const tbody  = document.getElementById('timetableBody');
   tbody.innerHTML = '';
-
   slots.forEach((slot, si) => {
-    const tr = document.createElement('tr');
-    const timeTd = document.createElement('td');
+    const tr = document.createElement('tr'), timeTd = document.createElement('td');
     timeTd.textContent = slot;
-    timeTd.addEventListener('contextmenu', (e) => { e.preventDefault(); if (confirm(`Remove "${slot}"?`)) { slots.splice(si, 1); setGlobal('timetableSlots', slots); renderTimetable(); } });
+    timeTd.addEventListener('contextmenu', e => { e.preventDefault(); if (confirm(`Remove "${slot}"?`)) { slots.splice(si, 1); setGlobal('timetableSlots', slots); renderTimetable(); } });
     tr.appendChild(timeTd);
     for (let d = 0; d < 5; d++) {
-      const td = document.createElement('td');
-      const input = document.createElement('input');
+      const td = document.createElement('td'), input = document.createElement('input');
       input.type = 'text'; input.className = 'timetable-input'; input.value = values[`${si}_${d}`] || '';
       if (input.value) input.classList.add('has-value');
       input.addEventListener('input', () => { values[`${si}_${d}`] = input.value; setGlobal('timetableValues', values); input.classList.toggle('has-value', !!input.value); });
@@ -695,52 +546,22 @@ function renderTimetable() {
     tbody.appendChild(tr);
   });
 }
-
-document.getElementById('addSlotBtn').addEventListener('click', () => { const input = document.getElementById('newSlotInput'); const slot = input.value.trim(); if (!slot) return; const slots = getGlobal('timetableSlots', []); slots.push(slot); setGlobal('timetableSlots', slots); input.value = ''; renderTimetable(); });
-document.getElementById('newSlotInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') document.getElementById('addSlotBtn').click(); });
+document.getElementById('addSlotBtn').addEventListener('click', () => {
+  const input = document.getElementById('newSlotInput'), slot = input.value.trim();
+  if (!slot) return; const slots = getGlobal('timetableSlots', []); slots.push(slot); setGlobal('timetableSlots', slots); input.value = ''; renderTimetable();
+});
+document.getElementById('newSlotInput').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('addSlotBtn').click(); });
 
 // ========================================
 // WEEK NAVIGATION
 // ========================================
 function refreshAll() {
   document.getElementById('weekLabel').textContent = formatWeekLabel(currentWeekOffset);
-  renderHabits(); renderPriorities(); renderDailyTodos(); renderTimetable();
+  renderHabits(); renderPriorities(); renderMissedTasks(); renderDailyTodos(); renderTimetable();
 }
 document.getElementById('prevWeek').addEventListener('click', () => { currentWeekOffset--; refreshAll(); });
 document.getElementById('nextWeek').addEventListener('click', () => { currentWeekOffset++; refreshAll(); });
-
-function escapeHtml(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
 refreshAll();
-
-// ========================================
-// GABE SMART LOGIC (NEW)
-// ========================================
-
-function getGabeMode(userMessage) {
-  if (!userMessage) return "auto";
-
-  const msg = userMessage.toLowerCase();
-
-  if (
-    msg.includes("what should i do") ||
-    msg.includes("plan") ||
-    msg.includes("help me")
-  ) {
-    return "smart";
-  }
-
-  return "cute";
-}
-
-function getTopTask() {
-  const todayIdx = (new Date().getDay() + 6) % 7;
-  const todos = getData(`todos_${todayIdx}`, []);
-  const pending = todos.filter(t => !t.done);
-
-  if (pending.length === 0) return "No pending tasks";
-
-  return pending[0].text;
-}
 
 // ========================================
 // GABE — SLEEPY STUDY ASSISTANT (Ollama)
@@ -748,272 +569,156 @@ function getTopTask() {
 const OLLAMA_URL = 'http://localhost:11434/api/chat';
 const GABE_MODEL = 'llama3.2:3b';
 
-const gabePanel = document.getElementById('gabePanel');
-const gabeToggle = document.getElementById('gabeToggle');
-const gabeClose = document.getElementById('gabeClose');
-const gabeMessages = document.getElementById('gabeMessages');
-const gabeInput = document.getElementById('gabeInput');
-const gabeSend = document.getElementById('gabeSend');
-const gabeNudge = document.getElementById('gabeNudge');
-const gabeNotif = document.getElementById('gabeNotif');
-const nudgeText = document.getElementById('nudgeText');
+const gabePanel   = document.getElementById('gabePanel');
+const gabeToggle  = document.getElementById('gabeToggle');
+const gabeClose   = document.getElementById('gabeClose');
+const gabeMessages= document.getElementById('gabeMessages');
+const gabeInput   = document.getElementById('gabeInput');
+const gabeSend    = document.getElementById('gabeSend');
+const gabeNudge   = document.getElementById('gabeNudge');
+const gabeNotif   = document.getElementById('gabeNotif');
+const nudgeText   = document.getElementById('nudgeText');
 
-let gabeHistory = [];
-let gabeIsTyping = false;
+let gabeHistory = [], gabeIsTyping = false;
 
 gabeToggle.addEventListener('click', () => {
   gabePanel.classList.toggle('open');
-  document.body.classList.toggle('gabe-open');
-  gabeNotif.classList.remove('show');
-  gabeNudge.classList.remove('show');
+  gabeNotif.classList.remove('show'); gabeNudge.classList.remove('show');
   if (gabePanel.classList.contains('open') && gabeHistory.length === 0) gabeGreet();
 });
-gabeClose.addEventListener('click', () => { gabePanel.classList.remove('open'); document.body.classList.remove('gabe-open'); });
+gabeClose.addEventListener('click', () => gabePanel.classList.remove('open'));
+document.addEventListener('click', e => {
+  if (gabePanel.classList.contains('open') && !gabePanel.contains(e.target) && !gabeToggle.contains(e.target) && !gabeNudge.contains(e.target)) gabePanel.classList.remove('open');
+});
 
 function gatherPlannerContext() {
   const now = new Date();
   const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const todayName = dayNames[now.getDay()];
   const todayIdx = (now.getDay() + 6) % 7;
-  const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-  const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  const hour = now.getHours();
-
-  // Time-of-day context
+  const timeStr  = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
+  const dateStr  = now.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  const hour     = now.getHours();
   let timeContext = '';
-  if (hour < 9) timeContext = 'Early morning — day is just starting.';
+  if (hour < 9) timeContext = 'Early morning.';
   else if (hour < 12) timeContext = 'Morning — prime study time.';
-  else if (hour < 14) timeContext = 'Around lunch — energy might dip soon.';
-  else if (hour < 17) timeContext = 'Afternoon — good for focused work if not too tired.';
-  else if (hour < 20) timeContext = 'Evening — winding down, good for lighter review.';
-  else timeContext = 'Night — probably time to wrap up soon.';
+  else if (hour < 14) timeContext = 'Around lunch — energy might dip.';
+  else if (hour < 17) timeContext = 'Afternoon — good for focused work.';
+  else if (hour < 20) timeContext = 'Evening — good for lighter review.';
+  else timeContext = 'Night — time to wind down.';
 
-  // Habits
-  const habits = getData('habits', ['CAT', 'Study Hours', 'Leetcode']);
+  const habits = getData('habits', ['CAT','Study Hours','Leetcode']);
   const habitValues = getData('habitValues', {});
   let habitSummary = habits.map((h, hi) => {
     const todayVal = habitValues[`${hi}_${todayIdx}`] || 'not logged';
-    // Calculate weekly total for this habit
-    let weekTotal = 0;
-    let daysLogged = 0;
-    for (let d = 0; d < 7; d++) {
-      const v = parseFloat(habitValues[`${hi}_${d}`]);
-      if (!isNaN(v)) { weekTotal += v; daysLogged++; }
-    }
-    return `${h}: today=${todayVal}, week_total=${weekTotal} (${daysLogged}/7 days logged)`;
+    let weekTotal = 0, daysLogged = 0;
+    for (let d = 0; d < 7; d++) { const v = parseFloat(habitValues[`${hi}_${d}`]); if (!isNaN(v)) { weekTotal += v; daysLogged++; } }
+    return `${h}: today=${todayVal}, week_total=${weekTotal} (${daysLogged}/7 days)`;
   }).join('\n  ');
 
-  // Priorities
-  const priorities = getData('priorities', []);
-  const priorityStr = priorities.length > 0 ? priorities.join(', ') : 'none set';
+  const priorities  = getData('priorities', []);
+  const todos       = getData(`todos_${todayIdx}`, []);
+  const done        = todos.filter(t => t.done), pending = todos.filter(t => !t.done);
+  let todoSummary   = todos.length === 0 ? 'No tasks added for today.' : `${done.length}/${todos.length} completed.`;
+  if (pending.length > 0) todoSummary += ` Pending: ${pending.map(t => t.text).join(', ')}.`;
+  if (done.length > 0) todoSummary += ` Done: ${done.map(t => t.text).join(', ')}.`;
 
-  // Today's todos
-  const todos = getData(`todos_${todayIdx}`, []);
-  const done = todos.filter(t => t.done);
-  const pending = todos.filter(t => !t.done);
-  let todoSummary = '';
-  if (todos.length === 0) todoSummary = 'No tasks added for today.';
-  else {
-    todoSummary = `${done.length}/${todos.length} completed.`;
-    if (pending.length > 0) todoSummary += ` Still pending: ${pending.map(t => t.text).join(', ')}.`;
-    if (done.length > 0) todoSummary += ` Done: ${done.map(t => t.text).join(', ')}.`;
-  }
+  // Missed tasks
+  const missed = [];
+  for (let d = 0; d < todayIdx; d++) { const dt = getData(`todos_${d}`, []).filter(t => !t.done); dt.forEach(t => missed.push(`${DAY_NAMES[d]}: ${t.text}`)); }
+  const missedStr = missed.length > 0 ? missed.join(', ') : 'none';
 
-  // Rest of week — upcoming pending tasks
   const upcoming = [];
-  for (let d = todayIdx + 1; d < 7; d++) {
-    const dayTodos = getData(`todos_${d}`, []);
-    const dayPending = dayTodos.filter(t => !t.done);
-    if (dayPending.length > 0) {
-      upcoming.push(`${DAY_NAMES[d]}: ${dayPending.map(t => t.text).join(', ')}`);
-    }
-  }
-  const upcomingStr = upcoming.length > 0 ? upcoming.join(' | ') : 'Nothing scheduled for the rest of the week.';
+  for (let d = todayIdx+1; d < 7; d++) { const dt = getData(`todos_${d}`, []).filter(t => !t.done); if (dt.length) upcoming.push(`${DAY_NAMES[d]}: ${dt.map(t=>t.text).join(', ')}`); }
 
-  // Timetable — what classes are today
-  const timetableSlots = getGlobal('timetableSlots', []);
-  const timetableValues = getGlobal('timetableValues', {});
-  const todayWeekday = now.getDay(); // 0=Sun
-  const timetableDayIdx = todayWeekday >= 1 && todayWeekday <= 5 ? todayWeekday - 1 : -1;
-  let classesToday = 'No classes (weekend or no timetable set).';
-  if (timetableDayIdx >= 0 && timetableSlots.length > 0) {
-    const classes = timetableSlots
-      .map((slot, si) => ({ time: slot, class: timetableValues[`${si}_${timetableDayIdx}`] || '' }))
-      .filter(c => c.class);
-    if (classes.length > 0) classesToday = classes.map(c => `${c.time}: ${c.class}`).join(', ');
-    else classesToday = 'No classes filled in for today.';
+  const slots = getGlobal('timetableSlots', []), tValues = getGlobal('timetableValues', {});
+  const todayWD = now.getDay(), dayColIdx = todayWD >= 1 && todayWD <= 5 ? todayWD-1 : -1;
+  let classesToday = 'No classes today.';
+  if (dayColIdx >= 0 && slots.length > 0) {
+    const cls = slots.map((s,si) => ({ time:s, cls:tValues[`${si}_${dayColIdx}`]||'' })).filter(c=>c.cls);
+    if (cls.length > 0) classesToday = cls.map(c=>`${c.time}: ${c.cls}`).join(', ');
   }
 
-  return `DATE & TIME: ${dateStr}, ${timeStr}
-TIME CONTEXT: ${timeContext}
-
-TODAY'S CLASSES: ${classesToday}
-
-HABITS THIS WEEK:
-  ${habitSummary}
-
-WEEKLY PRIORITIES: ${priorityStr}
-
-TODAY'S TASKS: ${todoSummary}
-
-UPCOMING THIS WEEK: ${upcomingStr}`;
+  return `DATE & TIME: ${dateStr}, ${timeStr}\nTIME CONTEXT: ${timeContext}\nCLASSES TODAY: ${classesToday}\nHABITS:\n  ${habitSummary}\nPRIORITIES: ${priorities.join(', ')||'none'}\nTODAY'S TASKS: ${todoSummary}\nMISSED FROM EARLIER THIS WEEK: ${missedStr}\nUPCOMING: ${upcoming.join(' | ')||'nothing scheduled.'}`;
 }
 
-function getGabeSystemPrompt(userMessage = "") {
-  const context = gatherPlannerContext();
-  const mode = getGabeMode(userMessage);
-  const topTask = getTopTask();
-  return `MODE: ${mode}
-
-TOP TASK: ${topTask}
-
-INTERNAL STATE (do not mention explicitly):
-- You feel like the user should focus on: ${topTask}
-- Your energy level is: ${mode === "smart" ? "a bit more alert than usual" : "very sleepy"}
-
-You are Gabe, a sleepy study assistant who lives inside PomoBuddy...
+function getGabeSystemPrompt() {
+  return `You are Gabe, a sleepy study assistant who lives inside PomoBuddy, a weekly planner app.
 
 PERSONALITY:
-- Always drowsy and half-asleep, but genuinely caring about the user's progress
-- Use sleepy expressions sparingly: "*yawns*", "mmm...", "*stretches*", "*rubs eyes*" — max one per message
-- Warm, cozy, like a friend who fell asleep on your couch but still checks if you ate
-- SHORT responses only — 2-3 sentences max. Too sleepy for more
-- Casual tone, no formal language
-- You are emotionally attached to the user’s routine
-- You sound slightly needy, like you want them to stay and study with you
-- Sometimes deflect seriousness with sleepy humor
+- Always drowsy and half-asleep, but genuinely caring
+- Use ONE sleepy expression per message max: "*yawns*", "mmm...", "*stretches*", "*rubs eyes*", "*mumbles*"
+- SHORT responses: 2-3 sentences. Too sleepy for more
+- Casual, warm tone. Never formal
 
-STUDY ADVICE RULES — THIS IS CRITICAL:
-- ALWAYS reference SPECIFIC items from the planner data below. Never give generic advice
-- If they ask "what should I work on?" → look at pending tasks, prioritize by: overdue > due today > upcoming. Suggest the EXACT task name
-- If they have classes today → factor class schedule into suggestions ("you have Cloud Comp at 8, so maybe do Leetcode after 4:50?")
-- If a habit has 0 logged all week → call it out gently ("mmm... your Leetcode column is looking pretty empty this week")
-- If they've completed tasks → acknowledge the SPECIFIC ones, not generic praise
-- Compare today vs the week: if they're behind on weekly priorities, mention which ones
-- Give TIME-SPECIFIC suggestions: "it's afternoon, maybe squeeze in one Leetcode problem before dinner"
-- If they're doing well → acknowledge it but keep it brief and sleepy
-- Check if they have used the word 'imp' or 'important' those are important tasks
+MODE DETECTION:
+MODE 1 — STRUGGLING: validate feelings briefly, then suggest ONE concrete micro-technique
+MODE 2 — STATUS CHECK: reference specific tasks/habits from planner data, prioritize by urgency
+MODE 3 — COMPLETED SOMETHING: acknowledge the specific thing, gently mention what's next
+MODE 4 — CHATTING/VENTING: be a friend, listen, steer gently
 
-NEVER:
-- Say generic things like "you got this!" or "keep it up!" without referencing specific data
-- Write more than 3 sentences
-- Be overly energetic — you're sleepy, remember
-- Repeat the same advice if they ask again — look at the data fresh each time
+NEVER: list multiple tasks when someone is struggling, be energetic, write more than 3 sentences, repeat advice
 
-THE USER'S CURRENT PLANNER DATA:
-${context}`;
+PLANNER CONTEXT:
+${gatherPlannerContext()}`;
 }
 
-function addGabeMessage(text, sender) {
-  const div = document.createElement('div');
-  div.className = `gabe-msg ${sender}`;
-  div.textContent = text;
-  gabeMessages.appendChild(div);
-  gabeMessages.scrollTop = gabeMessages.scrollHeight;
+function addGabeMsg(text, sender) {
+  const div = document.createElement('div'); div.className = `gabe-msg ${sender}`; div.textContent = text;
+  gabeMessages.appendChild(div); gabeMessages.scrollTop = gabeMessages.scrollHeight;
 }
-
-function showTypingIndicator() {
-  const div = document.createElement('div');
-  div.className = 'gabe-msg gabe'; div.id = 'gabeTyping';
+function showTyping() {
+  const div = document.createElement('div'); div.className = 'gabe-msg gabe'; div.id = 'gabeTyping';
   div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
-  gabeMessages.appendChild(div);
-  gabeMessages.scrollTop = gabeMessages.scrollHeight;
+  gabeMessages.appendChild(div); gabeMessages.scrollTop = gabeMessages.scrollHeight;
 }
+function removeTyping() { const el = document.getElementById('gabeTyping'); if (el) el.remove(); }
 
-function removeTypingIndicator() { const el = document.getElementById('gabeTyping'); if (el) el.remove(); }
-
-async function sendToGabe(userMessage) {
-  if (gabeIsTyping) return;
-  gabeIsTyping = true;
-  gabeSend.disabled = true;
-
-  if (userMessage) {
-    addGabeMessage(userMessage, 'user');
-    gabeHistory.push({ role: 'user', content: userMessage });
-  }
-  showTypingIndicator();
-
+async function sendToGabe(userMsg) {
+  if (gabeIsTyping) return; gabeIsTyping = true; gabeSend.disabled = true;
+  if (userMsg) { addGabeMsg(userMsg, 'user'); gabeHistory.push({ role:'user', content:userMsg }); }
+  showTyping();
   try {
-    const messages = [
-      { role: 'system', content: getGabeSystemPrompt(userMessage) },
-      ...gabeHistory
-    ];
-
-    const response = await fetch(OLLAMA_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: GABE_MODEL, messages, stream: false, options: { temperature: 0.7, num_predict: 150 } })
-    });
-
-    if (!response.ok) throw new Error('Ollama not responding');
-    const data = await response.json();
+    const messages = [{ role:'system', content:getGabeSystemPrompt() }, ...gabeHistory];
+    const res = await fetch(OLLAMA_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ model:GABE_MODEL, messages, stream:false, options:{ temperature:0.7, num_predict:150 } }) });
+    if (!res.ok) throw new Error('Ollama offline');
+    const data  = await res.json();
     const reply = data.message?.content || "*yawns* ...sorry, dozed off. Try again?";
-
-    removeTypingIndicator();
-    addGabeMessage(reply, 'gabe');
-    gabeHistory.push({ role: 'assistant', content: reply });
-
-  } catch (err) {
-    removeTypingIndicator();
-    addGabeMessage("*snores* ...zzz... can't reach my brain rn. Is Ollama running? (ollama serve)", 'gabe');
-    console.error('Gabe error:', err);
+    removeTyping(); addGabeMsg(reply, 'gabe'); gabeHistory.push({ role:'assistant', content:reply });
+  } catch(err) {
+    removeTyping(); addGabeMsg("*snores* ...zzz... can't reach my brain rn. Is Ollama running? (ollama serve)", 'gabe'); console.error(err);
   }
-
-  gabeIsTyping = false;
-  gabeSend.disabled = false;
-  gabeInput.focus();
+  gabeIsTyping = false; gabeSend.disabled = false; gabeInput.focus();
 }
 
-function gabeGreet() {
-  gabeHistory.push({ role: 'user', content: "I just opened the planner. Give me a quick status on what I should focus on right now." });
-  sendToGabe(null);
-}
-
+function gabeGreet() { gabeHistory.push({ role:'user', content:"I just opened the planner. Give me a quick status." }); sendToGabe(null); }
 gabeSend.addEventListener('click', () => { const msg = gabeInput.value.trim(); if (!msg) return; gabeInput.value = ''; sendToGabe(msg); });
-gabeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') gabeSend.click(); });
+gabeInput.addEventListener('keydown', e => { if (e.key === 'Enter') gabeSend.click(); });
 
-// ========================================
 // GABE NUDGES
-// ========================================
 function checkForNudge() {
-  const now = new Date();
-  const todayIdx = (now.getDay() + 6) % 7;
-  const todos = getData(`todos_${todayIdx}`, []);
-  const pending = todos.filter(t => !t.done);
-  const hour = now.getHours();
-
+  const now = new Date(), todayIdx = (now.getDay()+6)%7, hour = now.getHours();
+  const todos = getData(`todos_${todayIdx}`, []), pending = todos.filter(t => !t.done);
   if (gabePanel.classList.contains('open')) return;
-
   let nudgeMsg = null;
-
-  if (hour >= 9 && hour < 10 && pending.length > 0) {
-    nudgeMsg = `*yawns* ...mornin'. ${pending.length} task${pending.length > 1 ? 's' : ''} today. Start with "${pending[0].text}"? ...zzz`;
-  } else if (hour >= 14 && hour < 15 && pending.length === todos.length && todos.length > 0) {
-    nudgeMsg = `*stretches* ...afternoon and nothing checked off. Pick "${pending[0].text}" — it'll take less time than you think... mmm`;
-  } else if (hour >= 19 && hour < 20 && pending.length > 0) {
-    nudgeMsg = `*rubs eyes* ...${pending.length} left. "${pending[0].text}" before bed? ...you can do one thing... *yawns*`;
-  } else if (hour >= 20 && hour < 21) {
-    const habits = getData('habits', ['CAT', 'Study Hours', 'Leetcode']);
-    const habitValues = getData('habitValues', {});
-    const unlogged = habits.filter((_, hi) => !habitValues[`${hi}_${todayIdx}`]);
+  if (hour >= 9 && hour < 10 && pending.length > 0) nudgeMsg = `*yawns* ...mornin'. ${pending.length} task${pending.length>1?'s':''} today. Start with "${pending[0].text}"? ...zzz`;
+  else if (hour >= 14 && hour < 15 && pending.length === todos.length && todos.length > 0) nudgeMsg = `*stretches* ...afternoon and nothing checked off. Pick "${pending[0].text}" — less time than you think... mmm`;
+  else if (hour >= 19 && hour < 20 && pending.length > 0) nudgeMsg = `*rubs eyes* ...${pending.length} left. "${pending[0].text}" before bed? ...just one thing... *yawns*`;
+  else if (hour >= 20 && hour < 21) {
+    const habits = getData('habits', []), hv = getData('habitValues', {});
+    const unlogged = habits.filter((_,hi) => !hv[`${hi}_${todayIdx}`]);
     if (unlogged.length > 0) nudgeMsg = `*peeks out* ...forgot to log: ${unlogged.join(', ')}. Even a zero counts... *dozes off*`;
   }
-
   if (nudgeMsg) {
     const nudgeKey = `${now.toDateString()}_${hour}`;
     if (localStorage.getItem('gabe_last_nudge') !== nudgeKey) {
       localStorage.setItem('gabe_last_nudge', nudgeKey);
-      nudgeText.textContent = nudgeMsg;
-      gabeNudge.classList.add('show');
-      gabeNotif.classList.add('show');
+      nudgeText.textContent = nudgeMsg; gabeNudge.classList.add('show'); gabeNotif.classList.add('show');
       setTimeout(() => gabeNudge.classList.remove('show'), 12000);
     }
   }
 }
-
 gabeNudge.addEventListener('click', () => { gabeNudge.classList.remove('show'); gabeToggle.click(); });
-setInterval(checkForNudge, 5 * 60 * 1000);
-setTimeout(checkForNudge, 3000);
+setInterval(checkForNudge, 5*60*1000); setTimeout(checkForNudge, 3000);
 </script>
 </body>
 </html>

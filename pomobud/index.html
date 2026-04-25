@@ -3,36 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pomobuddy</title>
+    <title>PomoBuddy</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>
   </head>
   <body>
     <div class="main">
-      
-      <div class="left-side">
-        <div id="animation-container" style="width: 300px; height: 300px;"></div>
+
+      <!-- LEFT SIDE — timer, cat, controls -->
+      <div class="left-side" id="leftSide">
+
+        <div id="animation-container"></div>
+
+        <!-- Mode badge: FOCUS / BREAK -->
+        <div class="mode-badge focus" id="modeBadge">FOCUS</div>
 
         <div class="timer-circle">
           <span id="timer-display">30:00</span>
         </div>
+
+        <!-- Subject selector — pick BEFORE starting -->
+        <div class="subject-row">
+          <label class="subject-label">Studying</label>
+          <select id="mainSubjectSelect" class="main-subject-select">
+            <option value="General">General</option>
+          </select>
+        </div>
+
         <div class="buttons">
-          <button class="start" onclick="toggleTimer()">Start</button>
+          <button class="start" id="startBtn" onclick="toggleTimer()">Start</button>
           <button class="reset" onclick="resetTimer()">Reset</button>
         </div>
-        <p id="status">Stay focused!</p>
+
+        <!-- Recording indicator — shown while focus timer runs -->
+        <div class="recording-row" id="recordingRow" style="display:none;">
+          <span class="recording-dot"></span>
+          <span class="recording-label" id="recordingLabel">Recording</span>
+        </div>
+
+        <p id="status">Select a subject, then start.</p>
       </div>
 
+      <!-- RIGHT SIDE — nav buttons, pixel pals -->
       <div class="right-side">
-        <button id="todo-button">Set Your Study Goals</button>
+        <button id="todo-button">Weekly Planner</button>
         <button id="Custom">Customize Time</button>
-        <button id="tracker-button">📊 Study Tracker</button>
+        <button id="tracker-button">Study Tracker</button>
 
+        <!-- Custom time modal -->
         <div id="custom-time-modal" class="modal">
           <div class="modal-content">
             <h3>Customize Timer</h3>
-            <div>Minutes:</div>
+            <div>Focus minutes:</div>
             <input type="number" id="custom-time-input" min="1" max="120" value="30">
+            <div style="margin-top:10px;">Break minutes:</div>
+            <input type="number" id="custom-break-input" min="1" max="30" value="5">
             <div class="modal-buttons">
               <button id="save-time">Save</button>
               <button id="cancel-time">Cancel</button>
@@ -40,10 +65,10 @@
           </div>
         </div>
 
-        <div class="iflex"> 
-          <img src="./animations/img1.png" alt="Image 1">
-          <img src="./animations/img2.png" alt="Image 2">
-          <img src="./animations/img3.png" alt="Image 3">
+        <div class="iflex">
+          <img src="./animations/img1.png" alt="">
+          <img src="./animations/img2.png" alt="">
+          <img src="./animations/img3.png" alt="">
         </div>
       </div>
     </div>
@@ -56,42 +81,38 @@
           <button class="tracker-close" id="trackerClose">&times;</button>
         </div>
 
-        <!-- Subject selector + add -->
+        <!-- Filter by subject -->
         <div class="tracker-subject-bar">
           <select id="subjectSelect" class="subject-select">
-            <option value="_all" selected>All Subjects</option>
+            <option value="_all">All Subjects</option>
           </select>
           <button class="subject-add-btn" id="addSubjectBtn">+ Add</button>
         </div>
 
-        <!-- Add subject mini form -->
         <div class="add-subject-form" id="addSubjectForm" style="display:none;">
           <input type="text" id="newSubjectInput" placeholder="Subject name..." maxlength="30">
           <button id="confirmAddSubject" class="subject-confirm-btn">Add</button>
         </div>
 
-        <!-- Today's session -->
+        <!-- Today total -->
         <div class="tracker-today">
           <div class="today-label">Today's total</div>
-          <div class="today-time" id="todayTime">0h 0m</div>
+          <div class="today-time" id="todayTime">0m</div>
         </div>
 
-        <!-- Color gradient legend -->
+        <!-- Gradient legend -->
         <div class="gradient-legend">
           <span class="legend-label">0h</span>
           <div class="legend-bar"></div>
           <span class="legend-label">8h+</span>
         </div>
 
-        <!-- Weekly heatmap -->
         <div class="tracker-section-title">This Week</div>
         <div class="week-grid" id="weekGrid"></div>
 
-        <!-- Monthly heatmap -->
         <div class="tracker-section-title">This Month</div>
         <div class="month-grid" id="monthGrid"></div>
 
-        <!-- Subject breakdown -->
         <div class="tracker-section-title">Subject Breakdown</div>
         <div class="subject-bars" id="subjectBars"></div>
       </div>
@@ -99,50 +120,50 @@
 
     <!-- ===== FLOATING AMBIENT SOUND MIXER ===== -->
     <button class="sound-toggle-btn" id="soundToggleBtn" title="Ambient Sounds">
-      🎧
+      <span class="sound-btn-icon">&#9836;</span>
       <span class="sound-badge" id="soundBadge">0</span>
     </button>
 
     <div class="sound-panel" id="soundPanel">
-      <div class="sound-panel-title">🎧 Cozy Sounds</div>
+      <div class="sound-panel-title">Ambient Sounds</div>
       <div class="sound-list" id="soundList">
         <div class="sound-item" data-sound="rain">
-          <span class="sound-emoji">🌧️</span>
+          <span class="sound-dot-icon" style="--c:#78ade8"></span>
           <div class="sound-info">
             <div class="sound-name">Soft Rain</div>
             <input type="range" class="sound-slider" min="0" max="100" value="50">
           </div>
         </div>
         <div class="sound-item" data-sound="fire">
-          <span class="sound-emoji">🔥</span>
+          <span class="sound-dot-icon" style="--c:#f5c5a3"></span>
           <div class="sound-info">
             <div class="sound-name">Fireplace</div>
             <input type="range" class="sound-slider" min="0" max="100" value="50">
           </div>
         </div>
         <div class="sound-item" data-sound="cafe">
-          <span class="sound-emoji">☕</span>
+          <span class="sound-dot-icon" style="--c:#e8a0bf"></span>
           <div class="sound-info">
-            <div class="sound-name">Café Chatter</div>
+            <div class="sound-name">Cafe Chatter</div>
             <input type="range" class="sound-slider" min="0" max="100" value="50">
           </div>
         </div>
         <div class="sound-item" data-sound="wind">
-          <span class="sound-emoji">🍃</span>
+          <span class="sound-dot-icon" style="--c:#a8d8c8"></span>
           <div class="sound-info">
             <div class="sound-name">Gentle Wind</div>
             <input type="range" class="sound-slider" min="0" max="100" value="50">
           </div>
         </div>
         <div class="sound-item" data-sound="waves">
-          <span class="sound-emoji">🌊</span>
+          <span class="sound-dot-icon" style="--c:#a8c8e8"></span>
           <div class="sound-info">
             <div class="sound-name">Ocean Waves</div>
             <input type="range" class="sound-slider" min="0" max="100" value="50">
           </div>
         </div>
         <div class="sound-item" data-sound="birds">
-          <span class="sound-emoji">🐦</span>
+          <span class="sound-dot-icon" style="--c:#c4b1e0"></span>
           <div class="sound-info">
             <div class="sound-name">Birdsong</div>
             <input type="range" class="sound-slider" min="0" max="100" value="50">
@@ -151,6 +172,6 @@
       </div>
     </div>
 
-    <script type="module" src="./renderer.js"></script>
+    <script src="./renderer.js"></script>
   </body>
 </html>
